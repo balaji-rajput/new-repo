@@ -48,32 +48,32 @@ resource "aws_volume_attachment" "ebs_att" {
   instance_id = aws_instance.rhel.id
 }
 
-# resource "null_resource" "configure_vdo" {
-#   depends_on = [ aws_volume_attachment.ebs_att ]
+ resource "null_resource" "configure_vdo" {
+ depends_on = [ aws_volume_attachment.ebs_att ]
  
  
-# connection {
-#   type = "ssh"
-#   user = "ec2-user"
-#   private_key = file("./new-key1.pem")
-#   host = aws_instance.rhel.public_ip
-# }
+ connection {
+   type = "ssh"
+   user = "ec2-user"
+   private_key = file("./new-key1.pem")
+   host = aws_instance.rhel.public_ip
+ }
 
-# provisioner "remote-exec" {
-#   inline = [
-#         "sudo su -"
-#        "sudo dnf update -y",
-#        "sudo yum install lvm2 kmod-kvdo vdo -y",
-#         " sudo reboot"
-#        "sudo vgcreate homevg /dev/xvdf",
-#       # "sudo lvcreate --type vdo --name homelv --size 8G --virtualsize 15G  homevg",
-#       # "sudo mkfs.xfs -K /dev/homevg/homelv",
-#       # "sudo mount /dev/mapper/homevg-homelv /mount-test/",
-#       # "sudo echo  '/dev/mapper/homevg-homelv                       /mount-test                   xfs     defaults        0 0 ' >> /etc/fstab"
+ provisioner "remote-exec" {
+   inline = [
+         "sudo su -"
+        "sudo dnf update -y",
+        "sudo yum install lvm2 kmod-kvdo vdo -y",
+         " sudo reboot"
+        "sudo vgcreate homevg /dev/xvdf",
+       # "sudo lvcreate --type vdo --name homelv --size 8G --virtualsize 15G  homevg",
+       # "sudo mkfs.xfs -K /dev/homevg/homelv",
+       # "sudo mount /dev/mapper/homevg-homelv /mount-test/",
+       # "sudo echo  '/dev/mapper/homevg-homelv                       /mount-test                   xfs     defaults        0 0 ' >> /etc/fstab"
        
-#    ]
-#  }
-#  }
+    ]
+  }
+  }
 
 
 
